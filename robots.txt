@@ -1,9 +1,4 @@
-# Group 1
-User-agent: Googlebot
-Disallow: /nogooglebot/
-
-# Group 2
 User-agent: *
 Allow: /
 
-Sitemap: https://twitchytongue.com/sitemap.xml
+Sitemap: https://krazic.com/sitemap.xml
