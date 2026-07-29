@@ -52,6 +52,30 @@
       "url": "https://krazic.com/",
       "description": "Free browser games with zero downloads. Car parking, fruit slicing, and hill racing games that run right in your browser.",
       "publisher": { "@id": "https://krazic.com/#organization" }
+    },
+    {
+      "@type": "ItemList",
+      "name": "Krazic free browser games",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://krazic.com/precision-car-parking-3d/",
+          "name": "Precision Car Parking 3D"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://krazic.com/fruit-cutter-game/",
+          "name": "Neon Fruit Cutter"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "url": "https://krazic.com/mountain-climb-rally/",
+          "name": "Mountain Climb Rally"
+        }
+      ]
     }
   ]
 }
@@ -130,16 +154,18 @@
   .card{background:var(--panel);border:1px solid rgba(0,229,255,.18);border-radius:16px;overflow:hidden;
     transition:transform .2s, box-shadow .2s, border-color .2s;position:relative}
   .card:hover{transform:translateY(-6px);border-color:var(--cyan);box-shadow:0 14px 40px rgba(0,229,255,.22)}
-  .thumb{height:170px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative}
+  .thumb{height:170px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
   .thumb.parking{background:linear-gradient(135deg,#101820,#1f2f3f);}
   .thumb.parking::after{content:"";position:absolute;inset:0;background:
     repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,214,10,.5) 46px 50px);opacity:.35}
   .thumb.fruit{background:linear-gradient(135deg,#2b0a4a,#5a1090)}
   .thumb.rally{background:linear-gradient(160deg,#0a2a3f 55%,#123a1f 55%)}
+  .thumb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .thumb-emoji{position:relative;z-index:2}
   .badge{position:absolute;top:12px;left:12px;font-size:.7rem;font-weight:700;letter-spacing:.12em;
-    padding:5px 10px;border-radius:99px;background:rgba(13,2,33,.75)}
+    padding:5px 10px;border-radius:99px;background:rgba(13,2,33,.75);z-index:2}
   .pill{position:absolute;top:12px;right:12px;font-size:.68rem;letter-spacing:.12em;
-    padding:5px 12px;border-radius:99px;background:rgba(13,2,33,.78);border:1px solid rgba(255,255,255,.18);color:var(--text)}
+    padding:5px 12px;border-radius:99px;background:rgba(13,2,33,.78);border:1px solid rgba(255,255,255,.18);color:var(--text);z-index:2}
   .badge.hot{color:var(--magenta);border:1px solid var(--magenta)}
   .badge.new{color:var(--lime);border:1px solid var(--lime)}
   .badge.soon{color:var(--yellow);border:1px solid var(--yellow)}
@@ -226,7 +252,12 @@
   <div class="sec-head"><h2 class="display">LAUNCH LINEUP</h2><div class="rule"></div></div>
   <div class="games">
     <article class="card">
-      <div class="thumb parking" aria-hidden="true">🚗<span class="badge hot display">HOT</span><span class="pill display">DRIVING</span></div>
+      <div class="thumb parking">
+        <img class="thumb-img" src="https://krazic.com/precision-car-parking-3d/og-image.png" alt="Precision Car Parking 3D thumbnail" loading="lazy" decoding="async">
+        <span class="thumb-emoji" aria-hidden="true">🚗</span>
+        <span class="badge hot display">HOT</span>
+        <span class="pill display">DRIVING</span>
+      </div>
       <div class="card-body">
         <h3 class="display">PRECISION CAR PARKING</h3>
         <p>Squeeze into tight spots across busy world cities. One touch is all it takes, so park with care.</p>
@@ -234,7 +265,12 @@
       </div>
     </article>
     <article class="card">
-      <div class="thumb fruit" aria-hidden="true">🍉<span class="badge new display">NEW</span><span class="pill display">ARCADE</span></div>
+      <div class="thumb fruit">
+        <img class="thumb-img" src="https://krazic.com/fruit-cutter-game/og-image.png" alt="Neon Fruit Cutter thumbnail" loading="lazy" decoding="async">
+        <span class="thumb-emoji" aria-hidden="true">🍉</span>
+        <span class="badge new display">NEW</span>
+        <span class="pill display">ARCADE</span>
+      </div>
       <div class="card-body">
         <h3 class="display">NEON FRUIT CUTTER</h3>
         <p>Slice flying fruit, chain big combos, and stay clear of bombs. Unlock shiny new blades as your score climbs.</p>
@@ -242,7 +278,12 @@
       </div>
     </article>
     <article class="card">
-      <div class="thumb rally" aria-hidden="true">🚙<span class="badge new display">NEW</span><span class="pill display">PHYSICS</span></div>
+      <div class="thumb rally">
+        <img class="thumb-img" src="https://krazic.com/mountain-climb-rally/og-image.png" alt="Mountain Climb Rally thumbnail" loading="lazy" decoding="async">
+        <span class="thumb-emoji" aria-hidden="true">🚙</span>
+        <span class="badge new display">NEW</span>
+        <span class="pill display">PHYSICS</span>
+      </div>
       <div class="card-body">
         <h3 class="display">MOUNTAIN CLIMB RALLY</h3>
         <p>Race over hills and gaps at full throttle. Grab coins in the air and try to keep your wheels on the ground.</p>
