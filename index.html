@@ -154,14 +154,8 @@
   .card{background:var(--panel);border:1px solid rgba(0,229,255,.18);border-radius:16px;overflow:hidden;
     transition:transform .2s, box-shadow .2s, border-color .2s;position:relative}
   .card:hover{transform:translateY(-6px);border-color:var(--cyan);box-shadow:0 14px 40px rgba(0,229,255,.22)}
-  .thumb{height:170px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
-  .thumb.parking{background:linear-gradient(135deg,#101820,#1f2f3f);}
-  .thumb.parking::after{content:"";position:absolute;inset:0;background:
-    repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,214,10,.5) 46px 50px);opacity:.35}
-  .thumb.fruit{background:linear-gradient(135deg,#2b0a4a,#5a1090)}
-  .thumb.rally{background:linear-gradient(160deg,#0a2a3f 55%,#123a1f 55%)}
-  .thumb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-  .thumb-emoji{position:relative;z-index:2}
+  .thumb{height:170px;position:relative;overflow:hidden}
+  .thumb svg{width:100%;height:100%;display:block}
   .badge{position:absolute;top:12px;left:12px;font-size:.7rem;font-weight:700;letter-spacing:.12em;
     padding:5px 10px;border-radius:99px;background:rgba(13,2,33,.75);z-index:2}
   .pill{position:absolute;top:12px;right:12px;font-size:.68rem;letter-spacing:.12em;
@@ -252,11 +246,43 @@
   <div class="sec-head"><h2 class="display">LAUNCH LINEUP</h2><div class="rule"></div></div>
   <div class="games">
     <article class="card">
-      <div class="thumb parking">
-        <img class="thumb-img" src="https://krazic.com/precision-car-parking-3d/og-image.png" alt="Precision Car Parking 3D thumbnail" loading="lazy" decoding="async">
-        <span class="thumb-emoji" aria-hidden="true">🚗</span>
-        <span class="badge hot display">HOT</span>
-        <span class="pill display">DRIVING</span>
+      <div class="thumb" aria-hidden="true">
+        <span class="badge hot display">HOT</span><span class="pill display">DRIVING</span>
+        <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Night parking lot scene">
+        <defs>
+          <linearGradient id="pk-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0b1b33"/><stop offset="1" stop-color="#12263f"/>
+          </linearGradient>
+          <linearGradient id="pk-road" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1c2733"/><stop offset="1" stop-color="#121a24"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="70" fill="url(#pk-sky)"/>
+        <g fill="#0a1526">
+          <rect x="18" y="18" width="34" height="52"/><rect x="60" y="30" width="26" height="40"/>
+          <rect x="300" y="24" width="30" height="46"/><rect x="338" y="12" width="40" height="58"/>
+        </g>
+        <g fill="#ffd60a" opacity=".8">
+          <rect x="24" y="24" width="4" height="4"/><rect x="34" y="34" width="4" height="4"/><rect x="308" y="32" width="4" height="4"/>
+          <rect x="346" y="20" width="4" height="4"/><rect x="358" y="40" width="4" height="4"/><rect x="66" y="38" width="4" height="4"/>
+        </g>
+        <rect y="70" width="400" height="100" fill="url(#pk-road)"/>
+        <g stroke="#ffd60a" stroke-width="4" opacity=".9">
+          <line x1="120" y1="70" x2="95" y2="170"/><line x1="205" y1="70" x2="205" y2="170"/><line x1="290" y1="70" x2="315" y2="170"/>
+        </g>
+        <g transform="translate(228 96) rotate(4)">
+          <rect x="0" y="0" width="82" height="42" rx="10" fill="#e63946"/>
+          <rect x="14" y="6" width="52" height="14" rx="6" fill="#9ad7ff" opacity=".9"/>
+          <circle cx="14" cy="42" r="9" fill="#111"/><circle cx="68" cy="42" r="9" fill="#111"/>
+          <circle cx="14" cy="42" r="4" fill="#555"/><circle cx="68" cy="42" r="4" fill="#555"/>
+          <rect x="76" y="8" width="8" height="8" rx="2" fill="#fff8c4"/>
+        </g>
+        <ellipse cx="330" cy="120" rx="46" ry="20" fill="#fff8c4" opacity=".12"/>
+        <g transform="translate(120 108)">
+          <polygon points="12,0 24,34 0,34" fill="#ff7b00"/>
+          <rect x="4" y="20" width="16" height="5" fill="#fff"/>
+        </g>
+      </svg>
       </div>
       <div class="card-body">
         <h3 class="display">PRECISION CAR PARKING</h3>
@@ -265,11 +291,41 @@
       </div>
     </article>
     <article class="card">
-      <div class="thumb fruit">
-        <img class="thumb-img" src="https://krazic.com/fruit-cutter-game/og-image.png" alt="Neon Fruit Cutter thumbnail" loading="lazy" decoding="async">
-        <span class="thumb-emoji" aria-hidden="true">🍉</span>
-        <span class="badge new display">NEW</span>
-        <span class="pill display">ARCADE</span>
+      <div class="thumb" aria-hidden="true">
+        <span class="badge new display">NEW</span><span class="pill display">ARCADE</span>
+        <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sliced fruit with glowing blade trail">
+        <defs>
+          <linearGradient id="fr-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b2b52"/><stop offset="1" stop-color="#241a38"/>
+          </linearGradient>
+          <linearGradient id="fr-slash" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#a8e6cf" stop-opacity="0"/><stop offset=".5" stop-color="#eafff5"/><stop offset="1" stop-color="#a8e6cf" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="170" fill="url(#fr-bg)"/>
+        <circle cx="60" cy="30" r="2.5" fill="#b9a7e0" opacity=".7"/><circle cx="350" cy="140" r="2.5" fill="#b9a7e0" opacity=".7"/>
+        <circle cx="330" cy="26" r="2" fill="#ffcdab" opacity=".8"/><circle cx="40" cy="140" r="2" fill="#a8e6cf" opacity=".8"/>
+        <g transform="translate(120 88) rotate(-18)">
+          <path d="M0 0 A46 46 0 0 1 92 0 L92 8 L0 8 Z" fill="#ff6b81" transform="translate(-46 -30) rotate(180 46 4)"/>
+          <path d="M-46 -18 A46 46 0 0 0 46 -18 Z" fill="#ff6b81"/>
+          <path d="M-46 -18 A46 46 0 0 0 46 -18" fill="none" stroke="#2e7d4f" stroke-width="8"/>
+          <circle cx="-14" cy="2" r="3" fill="#3a2a4d"/><circle cx="8" cy="6" r="3" fill="#3a2a4d"/><circle cx="24" cy="0" r="3" fill="#3a2a4d"/>
+        </g>
+        <g transform="translate(120 62) rotate(-18)">
+          <path d="M-46 6 A46 46 0 0 1 46 6 Z" fill="#ff8fa3"/>
+          <path d="M-46 6 A46 46 0 0 1 46 6" fill="none" stroke="#2e7d4f" stroke-width="8"/>
+        </g>
+        <g transform="translate(292 92)">
+          <circle r="34" fill="#ffb347"/><circle r="27" fill="#ffcdab"/>
+          <g stroke="#ff9e2c" stroke-width="4">
+            <line x1="0" y1="-24" x2="0" y2="24"/><line x1="-24" y1="0" x2="24" y2="0"/>
+            <line x1="-17" y1="-17" x2="17" y2="17"/><line x1="-17" y1="17" x2="17" y2="-17"/>
+          </g>
+        </g>
+        <path d="M20 130 C 120 40, 260 150, 386 44" stroke="url(#fr-slash)" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <path d="M20 130 C 120 40, 260 150, 386 44" stroke="#eafff5" stroke-width="2" fill="none" opacity=".9"/>
+        <g fill="#a8e6cf"><circle cx="200" cy="86" r="3"/><circle cx="222" cy="102" r="2"/><circle cx="178" cy="74" r="2"/></g>
+      </svg>
       </div>
       <div class="card-body">
         <h3 class="display">NEON FRUIT CUTTER</h3>
@@ -278,11 +334,33 @@
       </div>
     </article>
     <article class="card">
-      <div class="thumb rally">
-        <img class="thumb-img" src="https://krazic.com/mountain-climb-rally/og-image.png" alt="Mountain Climb Rally thumbnail" loading="lazy" decoding="async">
-        <span class="thumb-emoji" aria-hidden="true">🚙</span>
-        <span class="badge new display">NEW</span>
-        <span class="pill display">PHYSICS</span>
+      <div class="thumb" aria-hidden="true">
+        <span class="badge new display">NEW</span><span class="pill display">PHYSICS</span>
+        <svg viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jeep climbing a sunset mountain road">
+        <defs>
+          <linearGradient id="rl-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1b2a5e"/><stop offset=".6" stop-color="#7b3f8f"/><stop offset="1" stop-color="#ff9e5e"/>
+          </linearGradient>
+        </defs>
+        <rect width="400" height="170" fill="url(#rl-sky)"/>
+        <circle cx="318" cy="64" r="26" fill="#ffd60a" opacity=".95"/>
+        <circle cx="318" cy="64" r="38" fill="#ffd60a" opacity=".18"/>
+        <path d="M0 96 L70 46 L140 96 Z" fill="#251a4f"/>
+        <path d="M90 104 L190 30 L300 104 Z" fill="#31235f"/>
+        <path d="M240 104 L330 52 L400 104 Z" fill="#251a4f"/>
+        <path d="M0 170 L0 124 Q 100 92 200 124 T 400 116 L400 170 Z" fill="#173420"/>
+        <path d="M0 132 Q 100 100 200 132 T 400 124" stroke="#0e2214" stroke-width="6" fill="none" opacity=".6"/>
+        <g fill="#ffd60a"><circle cx="150" cy="84" r="5"/><circle cx="176" cy="72" r="5"/><circle cx="202" cy="68" r="5"/><circle cx="228" cy="74" r="5"/></g>
+        <g transform="translate(84 96) rotate(-12)">
+          <rect x="0" y="0" width="74" height="30" rx="7" fill="#2e9e5b"/>
+          <rect x="44" y="-14" width="26" height="18" rx="4" fill="#2e9e5b"/>
+          <rect x="48" y="-10" width="16" height="12" rx="2" fill="#bfe8ff"/>
+          <circle cx="16" cy="32" r="11" fill="#111"/><circle cx="58" cy="32" r="11" fill="#111"/>
+          <circle cx="16" cy="32" r="5" fill="#666"/><circle cx="58" cy="32" r="5" fill="#666"/>
+          <rect x="70" y="4" width="7" height="7" rx="2" fill="#fff8c4"/>
+        </g>
+        <polygon points="164,92 236,78 236,96 164,104" fill="#fff8c4" opacity=".15"/>
+      </svg>
       </div>
       <div class="card-body">
         <h3 class="display">MOUNTAIN CLIMB RALLY</h3>
