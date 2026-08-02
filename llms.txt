@@ -1,6 +1,6 @@
 # Krazic
 
-> Free browser games with zero downloads. Play car parking, fruit slicing, and hill racing games instantly in your browser.
+> Free browser games with zero downloads. Play car parking, fruit slicing, hill racing, and sky island games instantly in your browser.
 
 Krazic is an arcade site for quick, mobile-friendly HTML5 games. No installs and no sign-ups required.
 
@@ -10,6 +10,7 @@ Krazic is an arcade site for quick, mobile-friendly HTML5 games. No installs and
 - [Precision Car Parking 3D](https://krazic.com/precision-car-parking-3d/): Park in tight city spots
 - [Neon Fruit Cutter](https://krazic.com/fruit-cutter-game/): Slice fruit, chain combos, avoid bombs
 - [Mountain Climb Rally](https://krazic.com/mountain-climb-rally/): Race over hills and gaps
+- [Cloud Hop 3D](https://krazic.com/cloud-hop-3d/): Hop across floating sky islands
 
 ## Optional
 
