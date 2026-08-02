@@ -7,7 +7,7 @@
 <meta name="description" content="Play Cloud Hop 3D free in your browser. Hop up floating sky islands, grab gems, dodge storms, and reach the portal. No download required.">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Krazic">
-<meta name="theme-color" content="#3E8FD8">
+<meta name="theme-color" content="#0a1628">
 <meta name="keywords" content="cloud hop, sky island game, 3D platformer, free browser game, hop game">
 <link rel="canonical" href="https://krazic.com/cloud-hop-3d/">
 <link rel="icon" href="https://krazic.com/favicon.ico" sizes="any">
@@ -52,9 +52,10 @@
   --emerald:#3FBF7F; --grape:#9D7BFF; --ink:#23496B; --glass:rgba(255,255,255,.58);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;font-family:"Nunito","Baloo 2",system-ui,sans-serif;background:#7ec8f5}
-#c{position:fixed;inset:0;display:block;filter:saturate(1.1) contrast(1.03) brightness(1.02)}
-#vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 64%,rgba(18,38,66,.16) 100%)}
+html,body{width:100%;height:100%;overflow:hidden;font-family:"Nunito","Baloo 2",system-ui,sans-serif;background:#0a1628}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0a1628}
+#c{display:block;width:min(100vw,calc(100vh * 16 / 9));height:min(100vh,calc(100vw * 9 / 16));max-width:100%;max-height:100%;border-radius:6px;touch-action:none}
+#vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 64%,rgba(8,14,28,.28) 100%)}
 .screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:20;pointer-events:none}
 .screen.hidden{display:none}
 .screen>*{pointer-events:auto}
@@ -199,7 +200,7 @@ kbd{background:rgba(255,255,255,.8);border:1.5px solid rgba(62,143,216,.4);borde
   <p>More free games: <a href="https://krazic.com/">Krazic home</a>, <a href="https://krazic.com/precision-car-parking-3d/">Precision Car Parking 3D</a>, <a href="https://krazic.com/fruit-cutter-game/">Neon Fruit Cutter</a>, <a href="https://krazic.com/mountain-climb-rally/">Mountain Climb Rally</a>.</p>
 </main>
 
-<canvas id="c"></canvas>
+<div id="stage"><canvas id="c"></canvas></div>
 <div id="vig"></div>
 <div id="vign"></div><div id="flash"></div>
 
@@ -255,7 +256,7 @@ kbd{background:rgba(255,255,255,.8);border:1.5px solid rgba(62,143,216,.4);borde
     <div class="setRow"><span>Effects volume</span><input type="range" id="sSfx" min="0" max="100" value="85"></div>
     <div class="setRow"><span>Screen shake</span><input type="range" id="sShake" min="0" max="100" value="100"></div>
     <div class="setRow"><span>Graphics quality</span>
-      <select id="sQuality"><option value="low">Low</option><option value="medium">Medium</option><option value="high" selected>High</option></select></div>
+      <select id="sQuality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>
     <button class="btn small" id="btnCloseSettings">Done</button>
   </div>
 </div>
@@ -359,7 +360,7 @@ function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a
 
 /* ---------------- Save (session; the full project uses versioned LocalStorage) */
 const save={unlockedLevel:1,chars:['rabbit'],stars:Array(20).fill(0),selChar:'rabbit',tokens:0,
-  settings:{master:.8,music:.6,sfx:.85,shake:1,quality:'high'}};
+  settings:{master:.8,music:.6,sfx:.85,shake:1,quality:'medium'}};
 
 /* ---------------- Audio: synthesized SFX + generative music ---------------- */
 const AudioSys={ctx:null,master:null,musicG:null,sfxG:null,muted:false,seq:null,
@@ -421,14 +422,15 @@ const AudioSys={ctx:null,master:null,musicG:null,sfxG:null,muted:false,seq:null,
 
 /* ---------------- Renderer / scene ---------------- */
 const canvas=$('c');
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 renderer.outputEncoding=THREE.sRGBEncoding;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
-renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.BasicShadowMap;
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.1,900);
-function onResize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);}
+const camera=new THREE.PerspectiveCamera(55,16/9,.1,900);
+function viewSize(){return{w:Math.max(1,canvas.clientWidth),h:Math.max(1,canvas.clientHeight)};}
+function onResize(){const {w,h}=viewSize();camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}
 addEventListener('resize',onResize);onResize();
 
 /* sky dome gradient shader */
@@ -447,21 +449,23 @@ scene.fog=new THREE.Fog(0xCDEBFF,40,170);
 const hemi=new THREE.HemisphereLight(0xCFE9FF,0x6FA84A,.72);scene.add(hemi);
 scene.add(new THREE.AmbientLight(0xFFFFFF,.13));
 const sunLight=new THREE.DirectionalLight(0xFFE9B8,1.0);
-sunLight.castShadow=true;sunLight.shadow.mapSize.set(2048,2048);
+sunLight.castShadow=true;sunLight.shadow.mapSize.set(1024,1024);
 sunLight.shadow.camera.left=-30;sunLight.shadow.camera.right=30;
 sunLight.shadow.camera.top=40;sunLight.shadow.camera.bottom=-30;
-sunLight.shadow.camera.far=140;sunLight.shadow.bias=-0.0005;sunLight.shadow.normalBias=.02;sunLight.shadow.radius=4;
+sunLight.shadow.camera.far=140;sunLight.shadow.bias=-0.0005;sunLight.shadow.normalBias=.02;
 scene.add(sunLight);scene.add(sunLight.target);
 const rim=new THREE.DirectionalLight(0xBFD8FF,.35);rim.position.set(-6,4,-8);scene.add(rim);
 
 function applyQuality(){const q=save.settings.quality;
   renderer.shadowMap.enabled=q!=='low';
   sunLight.castShadow=q!=='low';
-  const sz=q==='high'?2048:1024;
+  renderer.shadowMap.type=q==='high'?THREE.PCFSoftShadowMap:THREE.BasicShadowMap;
+  const sz=q==='high'?1024:q==='medium'?512:256;
   sunLight.shadow.mapSize.set(sz,sz);
   if(sunLight.shadow.map){sunLight.shadow.map.dispose();sunLight.shadow.map=null;}
-  Particles.mult=q==='low'?.4:q==='medium'?.7:1;
-  renderer.setPixelRatio(q==='low'?1:Math.min(devicePixelRatio,2));}
+  Particles.mult=q==='low'?.35:q==='medium'?.55:1;
+  renderer.setPixelRatio(q==='low'?1:q==='medium'?Math.min(devicePixelRatio,1.25):Math.min(devicePixelRatio,1.5));
+  onResize();}
 
 /* ---------------- Materials (shared, stylized) ---------------- */
 const M={
@@ -1254,7 +1258,8 @@ const CHAR_UNLOCK={rabbit:0,fox:2,panda:4,penguin:6,cat:8,chick:10,frog:12,robot
 const SAVE_KEY='cloudhop_save_v1';
 function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}catch(e){}}
 try{const _s=JSON.parse(localStorage.getItem(SAVE_KEY));
-  if(_s&&typeof _s==='object'){Object.assign(save,_s);
+  if(_s&&typeof _s==='object'){const _set=Object.assign({},save.settings,_s.settings||{});
+    Object.assign(save,_s);save.settings=_set;
     if(!Array.isArray(save.chars)||!save.chars.length)save.chars=['rabbit'];
     if(!save.chars.includes('rabbit'))save.chars.unshift('rabbit');
     save.chars=save.chars.filter(c=>c!=='ball'&&c!=='slime');
@@ -1302,7 +1307,8 @@ const FText={pool:[],show(txt,wx,wy,wz,col){let el=this.pool.find(e=>!e.busy);
   if(!el){el=document.createElement('div');el.className='ftext';document.body.appendChild(el);this.pool.push(el);}
   el.busy=true;el.textContent=txt;el.style.color=col||'#fff';
   const v=new THREE.Vector3(wx,wy,wz).project(camera);
-  el.style.left=((v.x*.5+.5)*innerWidth)+'px';el.style.top=((-v.y*.5+.5)*innerHeight)+'px';
+  const r=canvas.getBoundingClientRect();
+  el.style.left=(r.left+(v.x*.5+.5)*r.width)+'px';el.style.top=(r.top+(-v.y*.5+.5)*r.height)+'px';
   el.style.transition='none';el.style.transform='translate(-50%,-50%)';el.style.opacity='1';
   requestAnimationFrame(()=>{el.style.transition='transform 1s ease-out, opacity 1s';
     el.style.transform='translate(-50%,-160%)';el.style.opacity='0';});
@@ -2125,6 +2131,8 @@ canvas.addEventListener('webglcontextrestored',()=>{applyQuality();});
     setCharacter(save.selChar);startLevel(ql-1);booted=true;}
  }catch(e){}
  if(!booted)buildMenuScene();}
+try{$('sQuality').value=save.settings.quality||'medium';}catch(e){}
+applyQuality();
 requestAnimationFrame(frame);
 </script>
 </body>
